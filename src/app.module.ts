@@ -5,6 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import config from './config';
 import { DatabaseModule } from './database.module';
+import { UsersModule } from './users/users.module';
+import { TaskModule } from './task/task.module';
 
 @Module({
   imports: [
@@ -19,7 +21,9 @@ import { DatabaseModule } from './database.module';
         DB_PASSWORD: Joi.string().required(),
       })
     }),
-    DatabaseModule
+    DatabaseModule,
+    UsersModule,
+    TaskModule
   ],
   controllers: [AppController],
   providers: [AppService],
