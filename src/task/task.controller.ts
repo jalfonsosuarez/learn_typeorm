@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+  ParseIntPipe,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -8,27 +19,55 @@ export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
   @Post()
-  create(@Body() createTaskDto: CreateTaskDto) {
-    return this.taskService.create(createTaskDto);
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() createTaskDto: CreateTaskDto) {
+    return {
+      success: true,
+      task: await this.taskService.create(createTaskDto),
+      mst: 'Task succesfully created!',
+    };
   }
 
-  @Get()
-  findAll() {
-    return this.taskService.findAll();
+  @Get('/user/:id')
+  @HttpCode(HttpStatus.OK)
+  async findAll(@Param('id', ParseIntPipe) id: number) {
+    return {
+      success: true,
+      tasks: await this.taskService.findAll(id),
+      mst: 'Here are de user tasks!',
+    };
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.taskService.findOne(+id);
+  @HttpCode(HttpStatus.OK)
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return {
+      success: true,
+      task: await this.taskService.findOne(id),
+      mst: 'Here is the task!',
+    };
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-    return this.taskService.update(+id, updateTaskDto);
+  @Put(':id')
+  @HttpCode(HttpStatus.OK)
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateTaskDto: UpdateTaskDto,
+  ) {
+    return {
+      success: true,
+      task: await this.taskService.update(id, updateTaskDto),
+      mst: 'Task succesfully updated!',
+    };
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.taskService.remove(+id);
+  @HttpCode(HttpStatus.OK)
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return {
+      success: true,
+      task: await this.taskService.remove(id),
+      mst: 'Task succesfully removed!',
+    };
   }
 }
