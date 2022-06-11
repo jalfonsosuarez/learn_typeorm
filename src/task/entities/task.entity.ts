@@ -21,6 +21,9 @@ export class Task {
   @ManyToOne(() => User, (user) => user.tasks)
   user: User;
 
+  @Column({ type: 'integer' })
+  userId: number;
+
   @Column({ type: 'boolean', default: false })
   status: boolean;
 
