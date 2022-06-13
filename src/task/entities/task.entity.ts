@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   CreateDateColumn,
@@ -12,9 +13,11 @@ export class Task {
   @PrimaryGeneratedColumn({ type: 'integer' })
   id: number;
 
+  @ApiProperty()
   @Column({ type: 'varchar' })
   name: string;
 
+  @ApiProperty()
   @Column({ type: 'varchar' })
   description: string;
 
@@ -24,6 +27,7 @@ export class Task {
   @Column({ type: 'integer' })
   userId: number;
 
+  @ApiProperty()
   @Column({ type: 'boolean', default: false })
   status: boolean;
 
