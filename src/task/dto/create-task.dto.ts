@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
   IsNotEmpty,
@@ -10,19 +11,23 @@ import {
 
 @Injectable()
 export class CreateTaskDto {
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   name: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   description: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   @IsPositive()
   user: number;
 
+  @ApiProperty()
   @IsOptional()
   @IsNotEmpty()
   @IsBoolean()
